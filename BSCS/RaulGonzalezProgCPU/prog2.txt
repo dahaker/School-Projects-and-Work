@@ -1,0 +1,85 @@
+;prog2
+JMP start
+mes1: DB "desde el CPU$" 
+mes2: DB "Hola$" 
+tam1: DB 0
+tam2: DB 0
+
+
+start:
+	MOV C, mes1    
+	MOV B,'$'
+	MOV A,[tam1]
+	CALL .tamMes1   
+	MOV [tam1],A    
+	MOV C,mes2      
+	MOV A,[tam2]    
+	CALL .tamMes2    
+	MOV [tam2],A    
+	MOV A,[tam1]    
+	CMP A,[tam2]    
+	JB .printmes1   
+	CMP A,[tam2]    
+	JA .printmes2   
+        HLT             
+.tamMes1:      
+	INC C
+	INC A         
+	CMP B,[C]     
+	JNZ .tamMes1	
+	RET
+
+.tamMes2:        
+	INC C
+	INC A
+	CMP B,[C]
+	JNZ .tamMes2
+	RET
+
+.printmes1:    
+	MOV C,mes1
+	MOV D, 232	
+.loop:
+	MOV A, [C]	
+	MOV [D], A	
+	INC D
+	INC C
+	CMP D, 0xFF
+	JE STOP
+	CMP B,[C]
+	JNZ .loop
+	MOV C,mes2   
+	MOV [D],32
+	INC D
+.loop2:
+	MOV A, [C]
+	MOV [D],A
+	INC D
+	INC C
+	CMP B,[C]
+	JNZ .loop2	
+	HLT
+STOP:
+	HLT
+.printmes2:  
+	MOV C,mes2
+	MOV D, 232
+.loop3:
+	MOV A, [C]
+	MOV [D], A	
+	INC D
+	INC C
+	CMP B,[C]
+	JNZ .loop3
+	MOV C,mes1 
+	MOV [D],32
+	INC D
+.loop4:
+	MOV A, [C]	
+	MOV [D],A
+	INC D
+	INC C
+	CMP B,[C]
+	JNZ .loop4	
+	HLT
+ 

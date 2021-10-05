@@ -1,0 +1,55 @@
+JMP start
+lista: DB 23
+ DB 34
+ DB 92
+ DB 43
+ DB 125
+ DB 8
+ DB 255
+avg: DB 0
+		
+		     
+start:  MOV A, lista		
+	MOV B, 6
+
+	MOV C, 0
+
+again:	ADD C, [A]
+	INC A
+
+	DEC B
+	JNZ again
+
+	MOV D, avg
+
+	MOV [D], C
+	MOV B, 100
+	MOV A, C
+	PUSH C
+	DIV B
+
+	MOV C, A
+	ADD A, 0x30
+	MOV D, 232
+	MOV [D], A
+	INC D
+	MOV A, C
+	MUL B
+	POP C
+	SUB C, A
+
+	MOV B, 10
+	MOV A, C
+	PUSH C
+	DIV B
+	MOV C, A
+	ADD A, 0x30
+	MOV [D], A
+	INC D
+	MOV A, C
+	MUL B
+	POP C
+	SUB C, A
+	ADD C, 0x30
+	MOV [D], C
+	HLT

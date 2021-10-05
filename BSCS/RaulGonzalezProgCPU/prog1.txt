@@ -1,0 +1,52 @@
+	JMP start 
+mes1:  DB "Mensaje1$"  
+mes2:  DB "Otro Mensaje$" 
+mes3:  DB "Tercer Mensaje$"
+opcn:  DB 1
+
+start:
+	MOV A, 1
+	MOV B, 2
+	MOV C, 3
+	CMP A, [opcn]
+	JE mensaje1
+	CMP B, [opcn]
+	JE mensaje2
+	CMP C, [opcn]
+	JE mensaje3
+	MOV D, 232	
+	CALL print
+	HLT
+mensaje1:
+	MOV C, mes1    
+	MOV D, 232	
+	CALL print
+        HLT             
+mensaje2:
+	MOV C, mes2    
+	MOV D, 232	
+	CALL print
+        HLT             
+mensaje3:
+	MOV C, mes3    
+	MOV D, 232	
+	CALL print
+        HLT             
+
+print:		
+	PUSH A
+	PUSH B
+	PUSH C
+	MOV B, 36
+.loop:
+	MOV A, [C]	
+	MOV [D], A	
+	INC C
+	INC D  
+	CMP B, [C]	
+	JNZ .loop	
+
+	POP A
+	POP B
+	POP C
+	RET
